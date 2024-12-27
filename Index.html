@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.MATI Uñas & Manicura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fce4ec;
+            color: #333;
+        }
+
+        header {
+            background-color: #f8bbd0;
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            display: none;
+            padding: 20px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .service, .product {
+            background-color: #fff;
+            border: 1px solid #f8bbd0;
+            border-radius: 10px;
+            margin: 15px 20px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .service h2, .product h2 {
+            color: #e91e63;
+        }
+
+        .price {
+            color: #f9a825;
+            font-weight: bold;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #f9a825;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-btn:hover {
+            background-color: #c17910;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8bbd0;
+            color: #fff;
+        }
+    </style>
+    <script>
+        function switchSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function sendToWhatsApp(service, price) {
+            const number = "521XXXXXXXXXX"; // Reemplaza con tu número de WhatsApp
+            const message = `Hola, deseo agendar el servicio: ${service} por $${price}`;
+            window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+
+        function calculateTotal() {
+            const product1 = document.getElementById("product1").value || 0;
+            const product2 = document.getElementById("product2").value || 0;
+
+            const total = (product1 * 120) + (product2 * 350);
+            document.getElementById("totalPrice").innerText = `Total: $${total}`;
+        }
+
+        function buyProduct(product, quantity, price) {
+            const number = "521XXXXXXXXXX"; // Reemplaza con tu número de WhatsApp
+            const message = `Hola, deseo comprar ${quantity} ${product}(s) por un total de $${price}`;
+            window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>C.MATI Uñas & Manicura</h1>
+        <nav>
+            <a onclick="switchSection('services')">Servicios</a>
+            <a onclick="switchSection('products')">Productos</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Servicios -->
+        <section id="services" class="section active">
+            <div class="service">
+                <h2>1. Manicura clásica</h2>
+                <p>Incluye limpieza, corte, limado, y esmaltado sencillo.</p>
+                <p class="price">💰 Precio: $150</p>
+                <button class="contact-btn" onclick="sendToWhatsApp('Manicura clásica', 150)">Citas aquí</button>
+            </div>
+            <div class="service">
+                <h2>2. Manicura Spa</h2>
+                <p>Manicura clásica + exfoliación, hidratación, y masaje relajante.</p>
+                <p class="price">💰 Precio: $250</p>
+                <button class="contact-btn" onclick="sendToWhatsApp('Manicura Spa', 250)">Citas aquí</button>
+            </div>
+            <!-- Agrega más servicios según sea necesario -->
+        </section>
+
+        <!-- Productos -->
+        <section id="products" class="section">
+            <div class="product">
+                <h2>Esmaltes en gel</h2>
+                <p>Esmaltes de alta calidad para un acabado perfecto.</p>
+                <p class="price">💰 Precio: $120</p>
+                <label>Cantidad: <input type="number" id="product1" min="0" onchange="calculateTotal()"></label>
+            </div>
+            <div class="product">
+                <h2>Kit de uñas acrílicas</h2>
+                <p>Todo lo necesario para uñas acrílicas profesionales.</p>
+                <p class="price">💰 Precio: $350</p>
+                <label>Cantidad: <input type="number" id="product2" min="0" onchange="calculateTotal()"></label>
+            </div>
+            <p id="totalPrice" class="price">Total: $0</p>
+            <button class="contact-btn" onclick="buyProduct('productos seleccionados', document.getElementById('product1').value + document.getElementById('product2').value, document.getElementById('totalPrice').innerText.split('$')[1])">Comprar</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 C.MATI Uñas & Manicura</p>
+    </footer>
+</body>
+</html>
